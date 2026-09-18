@@ -28,7 +28,8 @@ p {
    2. HERO NAVIGATION & HEADER
    ========================================================================== */
 .hero-section {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../images/dumpster-bg.jpg') no-repeat center center/cover;
+    /* Updates the file path to point to your new home_bg.png file */
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../images/home_bg.png') no-repeat center center/cover;
     min-height: 90vh;
     padding: 20px 8%;
     display: flex;
@@ -55,7 +56,7 @@ p {
 }
 
 .logo-text {
-    color: #f7b731; 
+    color: #f7b731;
     font-size: 1.1rem;
     line-height: 1.1;
     letter-spacing: 1px;
@@ -125,29 +126,46 @@ p {
 }
 
 /* ==========================================================================
-   3. MARQUEE TEXT RUNNER
+   3. MARQUEE TEXT RUNNER (MAX SIZE SPAN)
    ========================================================================== */
 .marquee-divider {
     background-color: #cccccc;
-    padding: 25px 0;
-    border-bottom: 4px solid #111111;
+    padding: 0;
+    border-top: 4px solid #ffffff;
+    border-bottom: 4px solid #ffffff;
     overflow: hidden;
-    white-space: nowrap;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 200px; /* Slightly taller to frame the giant text block */
+    width: 100%;
 }
 
-.marquee-text h2 {
-    font-size: 4rem;
-    color: #111111;
-    display: inline-block;
-    letter-spacing: 2px;
+.marquee-track {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
+
+/* Upgraded to a massive 6.5rem font to aggressively fill out the space */
+.marquee-svg-text {
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    font-size: 6.5rem; 
+    fill: #111111;
+    letter-spacing: 4px;
+}
+
+
 
 /* ==========================================================================
    4. SERVICES SECTION
    ========================================================================== */
 .services-section {
-    background-color: #4ad52e; /* Updated to custom lime green */
-    color: #111111; /* Changed to dark text for contrast on bright green */
+    background-color: #4ad52e;
+    /* Updated to custom lime green */
+    color: #111111;
+    /* Changed to dark text for contrast on bright green */
     padding: 100px 8%;
 }
 
@@ -168,7 +186,7 @@ p {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding-top: 150px; 
+    padding-top: 150px;
 }
 
 .service-card h3 {
@@ -179,7 +197,8 @@ p {
 
 .service-card p {
     font-size: 1.05rem;
-    color: #111111; /* Dark charcoal text for accessibility */
+    color: #111111;
+    /* Dark charcoal text for accessibility */
     margin-bottom: 20px;
     max-width: 400px;
 }
@@ -193,78 +212,120 @@ p {
 }
 
 /* ==========================================================================
-   5. CONTACT & LEAD FORM
+   5. CONTACT & LEAD FORM (STYLIZED LIME GREEN VARIATION)
    ========================================================================== */
 .contact-section {
-    background-color: #4ad52e; /* Updated to custom lime green */
-    color: #111111; 
-    padding: 0 0 100px 8%; 
+    background-color: #4ad52e; /* Your custom vibrant lime green background */
+    color: #111111; /* Dark charcoal text for strong contrast on bright background */
+    padding: 100px 8%; 
 }
 
 .contact-container {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 60px;
+    grid-template-columns: 1fr 1.1fr; /* Splits form layout and image blocks evenly */
+    gap: 80px;
     align-items: center;
 }
 
 .form-side h2 {
-    font-size: 3.5rem;
+    font-size: 3.8rem;
+    line-height: 1.1;
     margin-bottom: 20px;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
 }
 
 .form-side p {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #111111;
     margin-bottom: 40px;
-    max-width: 450px;
+    max-width: 480px;
 }
 
 .lead-form {
-    max-width: 400px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.form-group input {
+/* Places First Name and Last Name inputs snugly on the same horizontal row */
+.form-row-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group input, 
+.form-group textarea {
     width: 100%;
-    padding: 22px 25px;
-    border: none;
-    border-radius: 4px;
+    padding: 20px 25px;
+    border: 2px solid transparent;
+    border-radius: 6px;
     background-color: #ffffff;
     font-size: 1.1rem;
     font-family: 'Arial', sans-serif;
     color: #111111;
+    transition: border-color 0.2s ease;
 }
 
-.form-group input::placeholder {
-    color: #aaaaaa;
+/* Subtle focus border ring when a client clicks into a text box */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #111111;
 }
 
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #888888;
+}
+
+/* Re-sizes the message textarea boxes elegantly */
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Heavy high-contrast black call-to-action button */
 .btn-submit {
-    background-color: #111111; /* Swapped to dark button to snap visually against bright green */
+    background-color: #111111;
     color: #ffffff;
     border: none;
-    padding: 18px;
+    padding: 20px;
     border-radius: 50px;
     font-family: 'Arial Black', sans-serif;
     font-size: 1.1rem;
     cursor: pointer;
     letter-spacing: 0.5px;
     margin-top: 10px;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .btn-submit:hover {
     transform: scale(1.02);
+    background-color: #222222;
 }
 
 .image-side img {
     width: 100%;
     height: 600px;
     object-fit: cover;
+    border-radius: 12px; /* Softens image presentation corners dynamically */
+    border: 3px solid #111111; /* Sharp black containment line */
+}
+
+/* Mobile responsive collapsing code updates */
+@media (max-width: 968px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .form-row-split {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .image-side img {
+        height: 350px;
+    }
 }
 
 /* ==========================================================================
@@ -357,21 +418,37 @@ p {
    8. RESPONSIVE MEDIA QUERIES (MOBILE FIXES)
    ========================================================================== */
 @media (max-width: 968px) {
-    .nav-links { display: none; } 
-    
-    .hero-content h1 { font-size: 2.2rem; }
-    
-    .services-container, .contact-container, .main-footer {
+    .nav-links {
+        display: none;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .services-container,
+    .contact-container,
+    .main-footer {
         grid-template-columns: 1fr;
     }
-    
-    .services-right { padding-top: 20px; }
-    
-    .contact-section { padding: 50px 8%; }
-    
-    .image-side img { height: 350px; }
-    
-    .footer-right { text-align: left; }
-    
-    .footer-bottom { grid-column: span 1; }
+
+    .services-right {
+        padding-top: 20px;
+    }
+
+    .contact-section {
+        padding: 50px 8%;
+    }
+
+    .image-side img {
+        height: 350px;
+    }
+
+    .footer-right {
+        text-align: left;
+    }
+
+    .footer-bottom {
+        grid-column: span 1;
+    }
 }
