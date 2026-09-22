@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. CORE GLOBAL STYLES & FONTS
+   1. CORE GLOBAL STYLES & RESETS
    ========================================================================== */
 * {
     margin: 0;
@@ -9,13 +9,25 @@
 
 html {
     scroll-behavior: smooth;
-    font-family: 'Arial Black', 'Impact', sans-serif;
 }
 
 body {
-    background-color: #f4f4f4;
-    color: #333333;
+    background-color: #111111;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
     overflow-x: hidden;
+    line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+.logo-text,
+.btn-book,
+.btn-submit,
+.btn-venmo {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    letter-spacing: 0.5px;
 }
 
 p {
@@ -28,20 +40,30 @@ p {
    2. HERO NAVIGATION & HEADER
    ========================================================================== */
 .hero-section {
-    /* Updates the file path to point to your new home_bg.png file */
-    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../images/home_bg.png') no-repeat center center/cover;
-    min-height: 90vh;
-    padding: 20px 8%;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+        url('../images/home_bg.png') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-bottom: 60px;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 8%;
+    background: rgba(17, 17, 17, 0.9);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .logo-container {
@@ -51,15 +73,16 @@ p {
 }
 
 .logo-img {
-    width: 65px;
-    height: 65px;
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
 }
 
 .logo-text {
     color: #f7b731;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     line-height: 1.1;
-    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .nav-links {
@@ -73,12 +96,12 @@ p {
     color: #ffffff;
     text-decoration: none;
     font-size: 1rem;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
+    font-weight: bold;
+    transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-    color: #cccccc;
+    color: #f7b731;
 }
 
 .nav-links .btn-book {
@@ -86,26 +109,25 @@ p {
     color: #111111;
     padding: 12px 28px;
     border-radius: 50px;
-    font-size: 0.95rem;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .nav-links .btn-book:hover {
-    color: #111111;
     transform: scale(1.05);
+    background-color: #f7b731;
 }
 
 .hero-content {
-    max-width: 800px;
-    margin-bottom: 10vh;
+    max-width: 850px;
+    padding: 140px 8% 20px 8%;
 }
 
 .hero-content h1 {
     color: #ffffff;
     font-size: 3.2rem;
     line-height: 1.15;
-    letter-spacing: -1px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
 }
 
 .btn-primary {
@@ -113,32 +135,30 @@ p {
     color: #ffffff;
     text-decoration: none;
     border: 2px solid #ffffff;
-    padding: 15px 40px;
+    padding: 16px 40px;
     border-radius: 50px;
     font-size: 1rem;
-    letter-spacing: 1px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
     background-color: #ffffff;
     color: #111111;
+    transform: scale(1.03);
 }
 
 /* ==========================================================================
-   3. MARQUEE TEXT RUNNER (MAX SIZE SPAN)
+   3. MARQUEE OVERLAY ENGINE & CONTINUOUS ANIMATION
    ========================================================================== */
 .marquee-divider {
-    background-color: #cccccc;
-    padding: 0;
-    border-top: 4px solid #ffffff;
-    border-bottom: 4px solid #ffffff;
-    overflow: hidden;
     position: relative;
-    display: flex;
-    align-items: center;
-    height: 200px; /* Slightly taller to frame the giant text block */
     width: 100%;
+    height: 90px;
+    background-color: #ffffff;
+    overflow: hidden;
+    z-index: 99;
+    margin-top: -45px;
+    margin-bottom: 0;
 }
 
 .marquee-track {
@@ -148,14 +168,28 @@ p {
     align-items: center;
 }
 
-/* Upgraded to a massive 6.5rem font to aggressively fill out the space */
-.marquee-svg-text {
-    font-family: 'Arial Black', 'Impact', sans-serif;
-    font-size: 6.5rem; 
-    fill: #111111;
-    letter-spacing: 4px;
+.marquee-track svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
+/* 🌟 Continuous translation loop target */
+.scrolling-text {
+    animation: marquee-scroll 25s linear infinite;
+}
+
+/* 🌟 Smooth hardware-accelerated animation frame keys */
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+        /* Moves exactly half the text width for a seamless handoff loop */
+    }
+}
 
 
 /* ==========================================================================
@@ -163,292 +197,326 @@ p {
    ========================================================================== */
 .services-section {
     background-color: #4ad52e;
-    /* Updated to custom lime green */
     color: #111111;
-    /* Changed to dark text for contrast on bright green */
     padding: 100px 8%;
+    position: relative;
+    z-index: 1;
 }
 
 .services-container {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 50px;
-    align-items: flex-start;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .services-left h2 {
     font-size: 4rem;
-    line-height: 1.05;
-    letter-spacing: -1px;
+    line-height: 1.0;
+    text-transform: uppercase;
 }
 
 .services-right {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding-top: 150px;
+}
+
+.service-card {
+    border: 3px solid #111111;
+    padding: 40px;
+    border-radius: 24px;
 }
 
 .service-card h3 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 15px;
-    letter-spacing: 0.5px;
 }
 
 .service-card p {
-    font-size: 1.05rem;
-    color: #111111;
-    /* Dark charcoal text for accessibility */
-    margin-bottom: 20px;
-    max-width: 400px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 25px;
 }
 
-.service-card .btn-link {
+.btn-link {
+    display: inline-block;
     color: #111111;
     text-decoration: none;
-    border-bottom: 2px solid #111111;
-    padding-bottom: 4px;
+    font-weight: bold;
     font-size: 1.1rem;
+    transition: transform 0.2s ease;
+}
+
+.btn-link:hover {
+    transform: translateX(6px);
 }
 
 /* ==========================================================================
-   5. CONTACT & LEAD FORM (STYLIZED LIME GREEN VARIATION)
+   5. CONTACT & LEAD FORM
    ========================================================================== */
 .contact-section {
-    background-color: #4ad52e; /* Your custom vibrant lime green background */
-    color: #111111; /* Dark charcoal text for strong contrast on bright background */
-    padding: 100px 8%; 
+    background-color: #4ad52e;
+    color: #111111;
+    padding: 0 8% 100px 8%;
 }
 
 .contact-container {
     display: grid;
-    grid-template-columns: 1fr 1.1fr; /* Splits form layout and image blocks evenly */
-    gap: 80px;
-    align-items: center;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    border: 3px solid #111111;
+    border-radius: 32px;
+    overflow: hidden;
+}
+
+.form-side {
+    padding: 60px;
 }
 
 .form-side h2 {
-    font-size: 3.8rem;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
+    font-size: 3.5rem;
+    margin-bottom: 10px;
 }
 
 .form-side p {
-    font-size: 1.15rem;
-    color: #111111;
+    font-size: 1.1rem;
+    font-weight: bold;
     margin-bottom: 40px;
-    max-width: 480px;
 }
 
 .lead-form {
-    max-width: 500px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Places First Name and Last Name inputs snugly on the same horizontal row */
 .form-row-split {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-.form-group input, 
+.form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 20px 25px;
-    border: 2px solid transparent;
-    border-radius: 6px;
+    padding: 18px 24px;
     background-color: #ffffff;
-    font-size: 1.1rem;
-    font-family: 'Arial', sans-serif;
+    border: 3px solid #111111;
+    border-radius: 12px;
+    font-size: 1rem;
     color: #111111;
-    transition: border-color 0.2s ease;
-}
-
-/* Subtle focus border ring when a client clicks into a text box */
-.form-group input:focus,
-.form-group textarea:focus {
     outline: none;
-    border-color: #111111;
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: #888888;
+    color: #666666;
+    font-weight: bold;
 }
 
-/* Re-sizes the message textarea boxes elegantly */
-.form-group textarea {
-    resize: vertical;
-}
-
-/* Heavy high-contrast black call-to-action button */
 .btn-submit {
     background-color: #111111;
     color: #ffffff;
     border: none;
-    padding: 20px;
+    padding: 18px;
     border-radius: 50px;
-    font-family: 'Arial Black', sans-serif;
     font-size: 1.1rem;
     cursor: pointer;
-    letter-spacing: 0.5px;
-    margin-top: 10px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .btn-submit:hover {
-    transform: scale(1.02);
     background-color: #222222;
+    transform: scale(1.02);
 }
 
-.image-side img {
+.image-side {
+    position: relative;
+    border-left: 3px solid #111111;
+}
+
+.contact-image {
     width: 100%;
-    height: 600px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 12px; /* Softens image presentation corners dynamically */
-    border: 3px solid #111111; /* Sharp black containment line */
-}
-
-/* Mobile responsive collapsing code updates */
-@media (max-width: 968px) {
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    .form-row-split {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .image-side img {
-        height: 350px;
-    }
+    display: block;
 }
 
 /* ==========================================================================
-   6. SCHEDULING INTERACTION BLOCK
+   6. SCHEDULING CALENDAR CONTAINER
    ========================================================================== */
 .booking-section {
-    padding: 100px 8%;
     background-color: #ffffff;
-    text-align: center;
+    color: #111111;
+    padding: 100px 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .booking-section h2 {
     font-size: 3rem;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .booking-section p {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    max-width: 600px;
+    margin-bottom: 10px;
+}
+
+.booking-section p:nth-of-type(2) {
+    margin-bottom: 50px;
     color: #555555;
 }
 
 .calendar-embed-container {
+    width: 100%;
     max-width: 900px;
-    margin: 0 auto;
     border: 3px solid #111111;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
 }
 
-.placeholder-box {
-    background-color: #eeeeee;
-    padding: 100px 20px;
-    color: #777777;
-    font-family: 'Arial', sans-serif;
-    font-size: 1.1rem;
+.calendar-embed-container iframe {
+    display: block;
 }
 
 /* ==========================================================================
-   7. FOOTER
+   7. VENMO INTERACTIVE CHECKOUT & ALIGNMENT
+   ========================================================================== */
+.payment-action-block {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-venmo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: #008CFF;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 22px 50px;
+    border-radius: 50px;
+    border: 3px solid #111111;
+    box-shadow: 0 8px 24px rgba(0, 140, 255, 0.25);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-venmo:hover {
+    transform: scale(1.03);
+    background-color: #0074d6;
+}
+
+.venmo-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+    margin-top: -2px;
+}
+
+/* ==========================================================================
+   8. MAIN SITE FOOTER
    ========================================================================== */
 .main-footer {
     background-color: #cccccc;
-    padding: 80px 8% 40px 8%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    row-gap: 60px;
+    color: #111111;
+    padding: 60px 8% 40px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-top: 4px solid #111111;
 }
 
 .main-footer h3 {
     font-size: 2.2rem;
-    letter-spacing: -0.5px;
-    margin-bottom: 10px;
 }
 
-.main-footer .phone-num {
+.phone-num {
     font-size: 1.2rem;
     font-weight: bold;
-}
-
-.footer-right {
-    text-align: right;
 }
 
 .footer-email {
     font-size: 2.2rem;
     color: #111111;
     text-decoration: none;
-    word-break: break-all;
-    transition: opacity 0.2s ease;
-}
-
-.footer-email:hover {
-    opacity: 0.7;
+    border-bottom: 4px solid #111111;
 }
 
 .footer-bottom {
-    grid-column: span 2;
-    border-top: 1px solid #999999;
+    text-align: center;
     padding-top: 20px;
-}
-
-.footer-bottom p {
     font-size: 0.9rem;
+    font-weight: bold;
     color: #555555;
+    width: 100%;
 }
 
 /* ==========================================================================
-   8. RESPONSIVE MEDIA QUERIES (MOBILE FIXES)
+   9. RESPONSIVE QUERIES (MOBILE BREAKPOINTS)
    ========================================================================== */
 @media (max-width: 968px) {
     .nav-links {
         display: none;
     }
 
-    .hero-content h1 {
-        font-size: 2.2rem;
-    }
-
     .services-container,
     .contact-container,
     .main-footer {
         grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
     }
 
-    .services-right {
-        padding-top: 20px;
+    .form-row-split {
+        grid-template-columns: 1fr;
     }
 
-    .contact-section {
-        padding: 50px 8%;
-    }
-
-    .image-side img {
+    .image-side {
         height: 350px;
+        border-left: none;
+        border-top: 3px solid #111111;
     }
 
-    .footer-right {
-        text-align: left;
+    .marquee-divider {
+        height: 60px;
+        margin-top: -30px;
     }
 
-    .footer-bottom {
-        grid-column: span 1;
+    .marquee-divider svg text {
+        font-size: 22px !important;
+    }
+
+    .calendar-embed-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .calendar-embed-container iframe {
+        min-width: 320px;
+        height: 520px;
+    }
+
+    .btn-venmo {
+        width: 100%;
+        max-width: 400px;
+        font-size: 1rem;
+        padding: 16px 24px;
     }
 }
