@@ -25,7 +25,9 @@ h3,
 .logo-text,
 .btn-book,
 .btn-submit,
-.btn-venmo {
+.btn-venmo,
+.btn-primary,
+.footer-email {
     font-family: 'Impact', 'Arial Black', sans-serif;
     letter-spacing: 0.5px;
 }
@@ -37,20 +39,8 @@ p {
 }
 
 /* ==========================================================================
-   2. HERO NAVIGATION & HEADER
+   2. NAVBAR & NAVIGATION
    ========================================================================== */
-.hero-section {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-        url('../images/home_bg.png') no-repeat center center/cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 60px;
-}
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -80,7 +70,7 @@ p {
 
 .logo-text {
     color: #f7b731;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     line-height: 1.1;
     text-transform: uppercase;
 }
@@ -109,12 +99,24 @@ p {
     color: #111111;
     padding: 12px 28px;
     border-radius: 50px;
+    text-decoration: none;
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .nav-links .btn-book:hover {
     transform: scale(1.05);
     background-color: #f7b731;
+    color: #111111;
+}
+
+/* ==========================================================================
+   3. HERO SECTION CONTENT
+   ========================================================================== */
+.hero-section {
+    position: relative;
+    padding-bottom: 120px;
+    background: linear-gradient(rgba(17, 17, 17, 0.25), rgba(17, 17, 17, 0.85)),
+        url('../images/home_bg.png') no-repeat center center / cover;
 }
 
 .hero-content {
@@ -132,66 +134,99 @@ p {
 
 .btn-primary {
     display: inline-block;
-    color: #ffffff;
-    text-decoration: none;
-    border: 2px solid #ffffff;
-    padding: 16px 40px;
+    background-color: #f7b731;
+    color: #111111;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 1.2rem;
+    padding: 14px 36px;
     border-radius: 50px;
-    font-size: 1rem;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .btn-primary:hover {
+    transform: scale(1.05);
     background-color: #ffffff;
-    color: #111111;
-    transform: scale(1.03);
 }
 
 /* ==========================================================================
-   3. MARQUEE OVERLAY ENGINE & CONTINUOUS ANIMATION
+   4. BOTTOM MARQUEE TICKER (GPU ACCELERATED & SILKY SMOOTH)
    ========================================================================== */
 .marquee-divider {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 90px;
-    background-color: #ffffff;
-    overflow: hidden;
-    z-index: 99;
-    margin-top: -45px;
-    margin-bottom: 0;
+    background-color: rgba(17, 17, 17, 0.95);
+    /* Adds a dark backing shield so green can't bleed through */
+
+    /* 🌟 THE VISIBILITY FIX: Thick containment frames pushed cleanly into view */
+    border-top: 4px solid #f7b731;
+    /* High-visibility construction gold */
+    border-bottom: 4px solid #ffffff;
+    /* Crisp white layout anchor baseline */
+    padding: 16px 0;
+    /* overflow: hidden; */
+
+    /* 🌟 THE OVERLAP FIX: Forces the marquee to float OVER the green services background */
+    z-index: 99 !important;
+
+    /* 🌟 CLEAN MASKS: Shifted gradient parameters slightly outward to protect border lines */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
 .marquee-track {
     display: flex;
     align-items: center;
+    gap: 60px;
+    width: max-content;
+    will-change: transform;
+    animation: marquee-scroll 45s linear infinite;
 }
 
-.marquee-track svg {
-    width: 100%;
-    height: 100%;
-    display: block;
+/* Pause scroll on mouse hover */
+.marquee-divider:hover .marquee-track {
+    animation-play-state: paused;
 }
 
-/* 🌟 Continuous translation loop target */
-.scrolling-text {
-    animation: marquee-scroll 25s linear infinite;
+.marquee-track img,
+.marquee-img {
+    height: 60px;
+    /* Snug height budget leaves breathing room for borders */
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+    transform: none;
+    /* Keeps branding reading from left to right naturally */
 }
 
-/* 🌟 Smooth hardware-accelerated animation frame keys */
+.marquee-text {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    /* Prevents font-smashing inside flex container strings */
+}
+
+/* Hardware-Accelerated 3D Transform for Zero Loop Snap */
 @keyframes marquee-scroll {
     0% {
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 
     100% {
-        transform: translateX(-50%);
-        /* Moves exactly half the text width for a seamless handoff loop */
+        transform: translate3d(-50%, 0, 0);
     }
 }
 
-
 /* ==========================================================================
-   4. SERVICES SECTION
+   5. SERVICES SECTION
    ========================================================================== */
 .services-section {
     background-color: #4ad52e;
@@ -252,7 +287,7 @@ p {
 }
 
 /* ==========================================================================
-   5. CONTACT & LEAD FORM
+   6. CONTACT & LEAD FORM
    ========================================================================== */
 .contact-section {
     background-color: #4ad52e;
@@ -308,6 +343,7 @@ p {
     font-size: 1rem;
     color: #111111;
     outline: none;
+    font-family: 'Arial', sans-serif; 
 }
 
 .form-group input::placeholder,
@@ -341,11 +377,11 @@ p {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    object-position: center;
 }
 
 /* ==========================================================================
-   6. SCHEDULING CALENDAR CONTAINER
+   7. SCHEDULING CALENDAR CONTAINER
    ========================================================================== */
 .booking-section {
     background-color: #ffffff;
@@ -354,6 +390,7 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .booking-section h2 {
@@ -385,10 +422,14 @@ p {
 
 .calendar-embed-container iframe {
     display: block;
+    width: 100%;
+    height: 650px;
+    /* 🌟 THE FIX: Forces the wrapper to render the full schedule grid without truncation */
+    border: none;
 }
 
 /* ==========================================================================
-   7. VENMO INTERACTIVE CHECKOUT & ALIGNMENT
+   8. VENMO INTERACTIVE CHECKOUT & ALIGNMENT
    ========================================================================== */
 .payment-action-block {
     margin-top: 50px;
@@ -428,7 +469,7 @@ p {
 }
 
 /* ==========================================================================
-   8. MAIN SITE FOOTER
+   9. MAIN SITE FOOTER
    ========================================================================== */
 .main-footer {
     background-color: #cccccc;
@@ -438,6 +479,7 @@ p {
     justify-content: space-between;
     align-items: center;
     border-top: 4px solid #111111;
+    flex-wrap: wrap;
 }
 
 .main-footer h3 {
@@ -454,11 +496,17 @@ p {
     color: #111111;
     text-decoration: none;
     border-bottom: 4px solid #111111;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.footer-email:hover {
+    color: #008CFF;
+    border-color: #008CFF;
 }
 
 .footer-bottom {
     text-align: center;
-    padding-top: 20px;
+    padding-top: 30px;
     font-size: 0.9rem;
     font-weight: bold;
     color: #555555;
@@ -466,55 +514,100 @@ p {
 }
 
 /* ==========================================================================
-   9. RESPONSIVE QUERIES (MOBILE BREAKPOINTS)
+   10. MOBILE RESPONSIVE STYLES (Under 768px Viewports)
    ========================================================================== */
-@media (max-width: 968px) {
-    .nav-links {
-        display: none;
-    }
+@media (max-width: 768px) {
 
+    /* --- Core Layout Corrections --- */
+    /* 🌟 THE RESCUE ANCHOR: Collapses horizontal desktop grid columns into a clean vertical flow */
     .services-container,
-    .contact-container,
-    .main-footer {
-        grid-template-columns: 1fr;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
+    .contact-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 40px !important;
+        width: 100% !important;
+        padding: 0 4% !important; /* Leaves a sleek native margin on small screens */
     }
 
-    .form-row-split {
-        grid-template-columns: 1fr;
-    }
-
+    /* 🌟 THE FULL-WIDTH PROOF: Prevents text boxes from shrinking into narrow strips */
+    .services-left,
+    .services-right,
+    .form-side,
     .image-side {
-        height: 350px;
-        border-left: none;
-        border-top: 3px solid #111111;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 10px 0 !important;
+    }
+
+    /* --- Hero Section & Headline Balancing --- */
+    .hero-content {
+        padding: 120px 5% 40px 5% !important;
+    }
+
+    /* Scales down the giant h1 font slightly so it wraps cleanly without pushing the button out of view */
+    .hero-content h1 {
+        font-size: 1.9rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 25px !important;
+    }
+
+    /* --- Marquee Ticker Fixes --- */
+    .hero-section {
+        padding-bottom: 85px !important; /* Safe vertical breathing budget */
     }
 
     .marquee-divider {
-        height: 60px;
-        margin-top: -30px;
+        padding: 12px 0 !important;
+        z-index: 100 !important; /* Pushes borders flush over any lower background layers */
     }
 
-    .marquee-divider svg text {
-        font-size: 22px !important;
+    .marquee-track img,
+    .marquee-img {
+        height: 45px !important; /* Scales down truck graphics slightly to fit mobile screen borders */
     }
 
+    /* --- Lead Form Split Fix --- */
+    .form-row-split {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    /* --- Image Aspect Ratio Recovery --- */
+    .image-side {
+        border-left: none !important;
+        border-top: 3px solid #111111 !important;
+        height: 280px !important;
+        margin-top: 15px !important;
+    }
+
+    .contact-image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important; /* Preserves the native dimensions of your rearview mirror asset */
+    }
+
+    /* --- Google Calendar Embed Box Container --- */
     .calendar-embed-container {
-        overflow-x: auto;
+        width: 100% !important;
+        overflow-x: auto !important; /* Adds a touch-swipe axis so clients can see full schedule cells */
         -webkit-overflow-scrolling: touch;
     }
 
     .calendar-embed-container iframe {
-        min-width: 320px;
-        height: 520px;
+        height: 600px !important;
     }
 
-    .btn-venmo {
-        width: 100%;
-        max-width: 400px;
-        font-size: 1rem;
-        padding: 16px 24px;
+    /* --- Footer Alignment --- */
+    .main-footer {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 25px !important;
+        padding: 40px 5% !important;
+    }
+
+    .footer-email {
+        font-size: 1.5rem !important; /* Prevents long email strings from expanding off-screen */
+        word-break: break-all !important;
     }
 }
