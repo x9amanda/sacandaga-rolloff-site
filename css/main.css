@@ -39,14 +39,15 @@ p {
 }
 
 /* ==========================================================================
-   2. NAVBAR & NAVIGATION
+   2. NAVBAR & NAVIGATION (RESPONSIVE & OVERFLOW PROTECTED)
    ========================================================================== */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 8%;
-    background: rgba(17, 17, 17, 0.9);
+    padding: 16px 5%;
+    /* Reduced side padding from 8% to 5% */
+    background: rgba(17, 17, 17, 0.95);
     backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
@@ -59,34 +60,40 @@ p {
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    flex-shrink: 0;
+    /* Prevents logo from collapsing */
 }
 
 .logo-img {
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
 }
 
 .logo-text {
     color: #f7b731;
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     line-height: 1.1;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 30px;
+    gap: 24px;
+    /* Optimized gap between links */
 }
 
 .nav-links a {
     color: #ffffff;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: bold;
+    white-space: nowrap;
+    /* Prevents link text from wrapping */
     transition: color 0.2s ease;
 }
 
@@ -94,20 +101,134 @@ p {
     color: #f7b731;
 }
 
+/* Single-Line Pill Button */
 .nav-links .btn-book {
     background-color: #e5e5e5;
     color: #111111;
-    padding: 12px 28px;
+    padding: 10px 22px;
     border-radius: 50px;
     text-decoration: none;
+    white-space: nowrap;
+    /* Keeps "BOOK NOW" on 1 single line */
+    flex-shrink: 0;
+    /* Prevents squeeze / cut-off */
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .nav-links .btn-book:hover {
     transform: scale(1.05);
     background-color: #f7b731;
-    color: #111111;
 }
+
+/* ==========================================================================
+   TABLET RESPONSIVE BREAKPOINT (769px to 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .navbar {
+        padding: 12px 3%;
+        /* Compact padding for mid-size windows */
+    }
+
+    .nav-links {
+        gap: 14px;
+        /* Tighter spacing for 5 links */
+    }
+
+    .nav-links a {
+        font-size: 0.88rem;
+    }
+
+    .nav-links .btn-book {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ==========================================================================
+   HAMBURGER & MOBILE DRAWER STYLES
+   ========================================================================== */
+
+/* Hidden on Desktop */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.hamburger .bar {
+    display: block;
+    width: 26px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+/* Mobile Breakpoint (Under 768px) */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block !important;
+        /* Forces hamburger button to show on mobile */
+    }
+
+    /* Animate bars into an 'X' when open */
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+        background-color: #f7b731;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+        background-color: #f7b731;
+    }
+
+    /* Mobile Drawer */
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        /* Hidden off-screen by default */
+        width: 100%;
+        flex-direction: column !important;
+        background-color: rgba(17, 17, 17, 0.98);
+        backdrop-filter: blur(12px);
+        text-align: center;
+        padding: 30px 0 40px 0;
+        gap: 22px !important;
+        border-bottom: 3px solid #f7b731;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+        transition: left 0.35s ease-in-out;
+    }
+
+    /* Slide Menu into View */
+    .nav-links.active {
+        left: 0 !important;
+    }
+
+    .nav-links li {
+        display: block !important;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+    }
+
+    .nav-links .btn-book {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+
 
 /* ==========================================================================
    3. HERO SECTION CONTENT
@@ -343,7 +464,7 @@ p {
     font-size: 1rem;
     color: #111111;
     outline: none;
-    font-family: 'Arial', sans-serif; 
+    font-family: 'Arial', sans-serif;
 }
 
 .form-group input::placeholder,
@@ -514,6 +635,283 @@ p {
 }
 
 /* ==========================================================================
+   ABOUT PAGE CONSOLIDATED STYLES
+   ========================================================================== */
+
+/* 1. Hero Header Banner */
+.about-hero {
+    position: relative;
+    padding: 160px 8% 80px 8%;
+    background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.92)),
+        url('images/home_bg.png') no-repeat center center / cover;
+    text-align: center;
+    border-bottom: 4px solid #f7b731;
+}
+
+.about-hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-hero h1 {
+    font-size: 3.8rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.hero-subhead {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 1.2rem;
+    color: #f7b731;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+.vet-badge {
+    display: inline-block;
+    background-color: #f7b731;
+    color: #111111;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 1rem;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    border: 2px solid #111111;
+}
+
+/* 2. Mission & Story 2-Column Section */
+.about-story-section {
+    background-color: #111111;
+    color: #ffffff;
+    padding: 90px 8%;
+}
+
+.about-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.highlight-quote {
+    background-color: #222222;
+    border-left: 5px solid #f7b731;
+    padding: 18px 22px;
+    margin: 25px 0;
+    border-radius: 8px;
+}
+
+.highlight-quote p {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    color: #f7b731;
+    font-size: 1.2rem;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.phone-badge {
+    margin-top: 25px;
+    padding: 16px 24px;
+    background-color: #222222;
+    border-left: 5px solid #4ad52e;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.phone-badge span {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #888888;
+    margin-bottom: 4px;
+}
+
+.phone-badge a {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 1.8rem;
+    color: #4ad52e;
+    text-decoration: none;
+}
+
+.image-wrapper {
+    border: 3px solid #f7b731;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    background-color: #222222;
+}
+
+.story-img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-caption {
+    background-color: #222222;
+    padding: 12px 20px;
+    text-align: center;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 0.95rem;
+    color: #f7b731;
+    letter-spacing: 0.5px;
+}
+
+/* 3. Green Container Options Section */
+.pillars-section {
+    background-color: #4ad52e;
+    color: #111111;
+    padding: 90px 8%;
+    text-align: center;
+}
+
+.pillars-header h2 {
+    font-size: 3.5rem;
+    line-height: 1.0;
+    text-transform: uppercase;
+}
+
+.pillars-header p {
+    font-weight: bold;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.pillars-grid {
+    display: grid;
+    gap: 30px;
+}
+
+.pillar-card {
+    background-color: #ffffff;
+    color: #111111;
+    border: 3px solid #111111;
+    padding: 35px 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 0 #111111;
+}
+
+.pillar-icon {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+}
+
+.pillar-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+.pillar-card p {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333333;
+}
+
+/* 4. Values Section */
+.values-section {
+    background-color: #111111;
+    color: #ffffff;
+    padding: 90px 8%;
+    text-align: center;
+}
+
+.values-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.values-section h2 {
+    font-size: 3rem;
+    color: #ffffff;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.value-box {
+    border: 3px solid #4ad52e;
+    padding: 30px 20px;
+    border-radius: 16px;
+    background-color: #1a1a1a;
+    text-align: left;
+}
+
+.value-box h3 {
+    font-size: 1.3rem;
+    color: #f7b731;
+    margin-bottom: 12px;
+}
+
+.value-box p {
+    font-size: 0.95rem;
+    color: #cccccc;
+}
+
+.about-cta-block {
+    margin-top: 30px;
+}
+
+.nav-links a.active {
+    color: #f7b731;
+    border-bottom: 2px solid #f7b731;
+}
+
+/* 5. Mobile Responsiveness */
+@media (max-width: 768px) {
+    .about-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .pillars-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .story-img {
+        height: 250px;
+    }
+}
+
+/* Mobile Adjustments for About Page */
+@media (max-width: 768px) {
+    .about-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .pillars-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .story-img {
+        height: 250px;
+    }
+}
+
+/* ==========================================================================
    10. MOBILE RESPONSIVE STYLES (Under 768px Viewports)
    ========================================================================== */
 @media (max-width: 768px) {
@@ -526,7 +924,8 @@ p {
         flex-direction: column !important;
         gap: 40px !important;
         width: 100% !important;
-        padding: 0 4% !important; /* Leaves a sleek native margin on small screens */
+        padding: 0 4% !important;
+        /* Leaves a sleek native margin on small screens */
     }
 
     /* 🌟 THE FULL-WIDTH PROOF: Prevents text boxes from shrinking into narrow strips */
@@ -553,17 +952,20 @@ p {
 
     /* --- Marquee Ticker Fixes --- */
     .hero-section {
-        padding-bottom: 85px !important; /* Safe vertical breathing budget */
+        padding-bottom: 85px !important;
+        /* Safe vertical breathing budget */
     }
 
     .marquee-divider {
         padding: 12px 0 !important;
-        z-index: 100 !important; /* Pushes borders flush over any lower background layers */
+        z-index: 100 !important;
+        /* Pushes borders flush over any lower background layers */
     }
 
     .marquee-track img,
     .marquee-img {
-        height: 45px !important; /* Scales down truck graphics slightly to fit mobile screen borders */
+        height: 45px !important;
+        /* Scales down truck graphics slightly to fit mobile screen borders */
     }
 
     /* --- Lead Form Split Fix --- */
@@ -584,13 +986,15 @@ p {
     .contact-image {
         width: 100% !important;
         height: 100% !important;
-        object-fit: cover !important; /* Preserves the native dimensions of your rearview mirror asset */
+        object-fit: cover !important;
+        /* Preserves the native dimensions of your rearview mirror asset */
     }
 
     /* --- Google Calendar Embed Box Container --- */
     .calendar-embed-container {
         width: 100% !important;
-        overflow-x: auto !important; /* Adds a touch-swipe axis so clients can see full schedule cells */
+        overflow-x: auto !important;
+        /* Adds a touch-swipe axis so clients can see full schedule cells */
         -webkit-overflow-scrolling: touch;
     }
 
@@ -607,7 +1011,94 @@ p {
     }
 
     .footer-email {
-        font-size: 1.5rem !important; /* Prevents long email strings from expanding off-screen */
+        font-size: 1.5rem !important;
+        /* Prevents long email strings from expanding off-screen */
         word-break: break-all !important;
+    }
+}
+
+/* ==========================================================================
+   HAMBURGER MENU & MOBILE DRAWER STYLES
+   ========================================================================== */
+
+/* Hidden on Desktop */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.hamburger .bar {
+    display: block;
+    width: 26px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: #ffffff;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+/* 🌟 Mobile Breakpoint (Under 768px) */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        /* Shows hamburger icon on mobile */
+    }
+
+    /* Animate Hamburger Bars into an 'X' when Open */
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+        background-color: #f7b731;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+        background-color: #f7b731;
+    }
+
+    /* Mobile Menu Drawer (Slides Down From Top) */
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        /* Positions directly below navbar */
+        left: -100%;
+        /* Hidden off-screen by default */
+        width: 100%;
+        flex-direction: column;
+        background-color: rgba(17, 17, 17, 0.98);
+        backdrop-filter: blur(12px);
+        text-align: center;
+        padding: 30px 0 40px 0;
+        gap: 22px;
+        border-bottom: 3px solid #f7b731;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+        transition: left 0.35s ease-in-out;
+    }
+
+    /* Slide Menu into View when Active */
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-links li {
+        display: block;
+    }
+
+    .nav-links a {
+        font-size: 1.25rem;
+    }
+
+    .nav-links .btn-book {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 12px 30px;
+        font-size: 1rem;
     }
 }
