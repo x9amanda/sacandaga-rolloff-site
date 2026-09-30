@@ -188,23 +188,29 @@
         </div>
     </footer>
 
-    <!-- Hamburger Menu Toggle Script -->
+    <!-- iOS-Compatible Hamburger Script -->
     <script>
-        const hamburger = document.getElementById('hamburger-toggle');
-        const navLinks = document.getElementById('nav-links');
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.getElementById('hamburger-toggle');
+            const navLinks = document.getElementById('nav-links');
 
-        // Toggle menu open/closed on click
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+            if (hamburger && navLinks) {
+                function toggleMenu(e) {
+                    e.preventDefault();
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                }
 
-        // Auto-close menu when a user clicks any navigation link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
+                // Triggers instantly on tap or click across iOS, Android & Desktop
+                hamburger.addEventListener('click', toggleMenu);
+
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
         });
     </script>
 </body>

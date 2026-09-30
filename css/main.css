@@ -145,7 +145,7 @@ p {
 }
 
 /* ==========================================================================
-   HAMBURGER & MOBILE DRAWER STYLES
+   HAMBURGER & MOBILE DRAWER STYLES (IOS WEBKIT COMPATIBLE)
    ========================================================================== */
 
 /* Hidden on Desktop */
@@ -154,8 +154,12 @@ p {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 8px;
     z-index: 1001;
+    touch-action: manipulation;
+    /* 🌟 Fast-tap response on iOS */
+    -webkit-tap-highlight-color: transparent;
+    /* Removes gray tap overlay on iOS */
 }
 
 .hamburger .bar {
@@ -166,13 +170,14 @@ p {
     background-color: #ffffff;
     border-radius: 3px;
     transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+    pointer-events: none;
+    /* 🌟 Prevents child spans from blocking taps on iOS */
 }
 
 /* Mobile Breakpoint (Under 768px) */
 @media (max-width: 768px) {
     .hamburger {
         display: block !important;
-        /* Forces hamburger button to show on mobile */
     }
 
     /* Animate bars into an 'X' when open */
@@ -190,15 +195,18 @@ p {
         background-color: #f7b731;
     }
 
-    /* Mobile Drawer */
+    /* 🌟 FIX: Uses position: absolute with top: 100% to bypass WebKit containing block bug */
     .nav-links {
-        position: fixed;
-        top: 70px;
-        left: -100%;
+        position: absolute !important;
+        top: 100% !important;
+        /* Snaps directly beneath navbar */
+        left: -100% !important;
         /* Hidden off-screen by default */
-        width: 100%;
+        width: 100% !important;
         flex-direction: column !important;
         background-color: rgba(17, 17, 17, 0.98);
+        -webkit-backdrop-filter: blur(12px);
+        /* 🌟 iOS WebKit Blur */
         backdrop-filter: blur(12px);
         text-align: center;
         padding: 30px 0 40px 0;

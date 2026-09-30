@@ -186,7 +186,31 @@
             <p>Site custom-coded by Results Made Human</p>
         </div>
     </footer>
+<!-- iOS-Compatible Hamburger Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburger = document.getElementById('hamburger-toggle');
+        const navLinks = document.getElementById('nav-links');
 
+        if (hamburger && navLinks) {
+            function toggleMenu(e) {
+                e.preventDefault();
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            }
+
+            // Triggers instantly on tap or click across iOS, Android & Desktop
+            hamburger.addEventListener('click', toggleMenu);
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+    });
+</script>
 </body>
 
 </html>
